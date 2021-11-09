@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Head from "next/head";
 import PostCard from "../components/PostCard";
 import PostWidget from "../components/PostWidget";
@@ -6,7 +7,13 @@ import { getPosts } from "../services";
 import FeaturedPosts from "../components/FeaturedPosts";
 
 
-export default function Home({ posts }) {
+export default function Home() {
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    getPosts()
+      .then((res) => setPosts(res));
+  }, [])
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
@@ -42,10 +49,10 @@ export default function Home({ posts }) {
   );
 }
 
-export async function getStaticProps() {
-  const posts = (await getPosts()) || [];
+// export async function getStaticProps() {
+//   const posts = (await getPosts()) || [];
 
-  return {
-    props: { posts }
-  }
-}
+//   return {
+//     props: { posts }
+//   }
+// }
