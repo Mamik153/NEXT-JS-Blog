@@ -12,7 +12,7 @@ const Categories = () => {
 
     //categories?.map(item => console.log(item))
     return (
-        <div className="bg-white rounded-3xl shadow-md p-8 mb-10">
+        <div className="bg-white rounded-3xl shadow-md p-6 mb-10">
             <h3 className="text-md mb-4 font-semibold pb-4 border-b">Categories</h3>
             <div className="flex flex-wrap">
                 {
