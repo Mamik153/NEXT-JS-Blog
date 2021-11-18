@@ -7,22 +7,29 @@ import CommentsForm from '../../components/CommentsForm'
 import Comments from '../../components/Comments'
 import PostWidget from '../../components/PostWidget'
 import Categories from '../../components/Categories'
-
+import { useRouter } from 'next/router'
 
 
 const PostDetails = () => {
-    //console.log(post);
+    const router = useRouter()
     const [post, setPost] = useState({});
     const [posts, setPosts] = useState({})
     const [loading, setLoading] = useState(true);
 
-    useEffect(async () => {
-        const data = await getPostDetails(post.slug);
+    const postSlug = router.asPath.split('/')[2];
 
-        setPostsNew(data);
+    useEffect(async () => {
+        const posts = await getPosts()
+        let data
+        if (postSlug !== '[slug]') {
+            data = await getPostDetails(postSlug);
+        }
+        
+
+        setPost(data);
         setLoading(false)
     }, [])
-    console.log(loading);
+    
     return (
         
         <div className="container mx-auto lg:px-10 mb-8">
@@ -82,11 +89,11 @@ export default PostDetails
 //   }
 // }
 
-export async function getStaticPaths() {
-    const posts = await getPosts()
+// export async function getStaticPaths() {
+//     const posts = await getPosts()
 
-    return {
-        paths: posts.map(({ node: { slug } }) => ({ params: { slug } })),
-        fallback: false,
-    }
-}
+//     return {
+//         paths: posts.map(({ node: { slug } }) => ({ params: { slug } })),
+//         fallback: false,
+//     }
+// }
